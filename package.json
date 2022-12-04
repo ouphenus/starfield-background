@@ -1,0 +1,24 @@
+{
+  "name": "ouphenus-starfield-background",
+  "version": "1.0.0",
+  "description": "Efecto de campo de estrella para usar en su pagina HTML, Starfield background effect for use in HTML pages.",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ouphenus/starfield-background.git"
+  },
+  "keywords": [
+    "starfield",
+    "effect",
+    "html",
+    "Canvas Render"
+  ],
+  "author": "Roberto López",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ouphenus/starfield-background/issues"
+  },
+  "homepage": "https://github.com/ouphenus/starfield-background#readme"
+}
