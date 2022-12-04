@@ -4,6 +4,7 @@
   "description": "Efecto de campo de estrella para usar en su pagina HTML, Starfield background effect for use in HTML pages.",
   "main": "index.js",
   "scripts": {
+    "start" : "npx tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/ouphenus/starfield-background/issues"
   },
-  "homepage": "https://github.com/ouphenus/starfield-background#readme"
+  "homepage": "https://github.com/ouphenus/starfield-background#readme",
+  "devDependencies": {
+    "typescript": "^4.9.3"
+  }
 }
