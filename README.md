@@ -1,4 +1,4 @@
-<em> # starfield-background </em>
+# starfield-background
 
 Efecto de campo de estrellas para usar en su pagina HTML,  Starfield background effect for use in HTML pages.
 
