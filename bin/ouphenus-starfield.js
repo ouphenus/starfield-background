@@ -1,6 +1,17 @@
-"use strict";
-var OuphenusStarField;
+export var OuphenusStarField;
 (function (OuphenusStarField) {
+    // -------------------------------------------------------
+    // Clase Utils
+    // -------------------------------------------------------
+    class Utils {
+        static range(min, max) {
+            return min + ((max - min) * Math.random());
+        }
+        static rangeInt(min, max) {
+            return Math.round(min + ((max - min) * Math.random()));
+        }
+    }
+    OuphenusStarField.Utils = Utils;
     // -------------------------------------------------------
     // Clase Ticker
     // -------------------------------------------------------
@@ -62,7 +73,8 @@ var OuphenusStarField;
     // Clase Star
     // -------------------------------------------------------
     class Star extends Sprite {
-        constructor(image, x, y, sx, sy, speed, angle, acceleration) {
+        constructor(x, y, sx, sy, speed, angle, acceleration) {
+            let image = Star.starsImages[Utils.rangeInt(0, Star.starsImages.length - 1)];
             super(image, x, y, sx, sy);
             this.xo = x;
             this.yo = y;
@@ -92,7 +104,14 @@ var OuphenusStarField;
                 0.5 * this.acceleration * this.time * this.time * Math.sign(this.vy);
             this.onDraw(context);
         }
+        // Setenado una lista estática de Imágenes
+        static setupStarsImages(urlsListStarsImages) {
+            for (var i = 0; i < urlsListStarsImages.length; i++) {
+                Star.starsImages.push(new Image(urlsListStarsImages[i]));
+            }
+        }
     }
+    Star.starsImages = new Array();
     OuphenusStarField.Star = Star;
     // -------------------------------------------------------
     // Clase Main Application
@@ -110,12 +129,6 @@ var OuphenusStarField;
             this.canvas.style.position = 'absolute';
             this.stars = new Array();
             this.timerToCreate = 1000;
-            // Cargando Lista de imágenes
-            this.images = new Array();
-            this.images.push(new Image('images/star_white.png'));
-            this.images.push(new Image('images/star_red.png'));
-            this.images.push(new Image('images/star_blue.png'));
-            this.images.push(new Image('images/star_yellow.png'));
         }
         createBanner() {
             this.banner = new Sprite(new Image('images/banner.png'), 0, 0, 8, 8);
@@ -166,8 +179,7 @@ var OuphenusStarField;
                 let speed = this.range(0.05, 0.2);
                 let angle = Math.atan2(y - centerY, x - centerX);
                 let acceleration = this.range(0.00001, 0.0003);
-                let image = this.images[Math.round(this.range(0, this.images.length - 1))];
-                let star = new Star(image, x, y, scale, scale, speed, angle, acceleration);
+                let star = new Star(x, y, scale, scale, speed, angle, acceleration);
                 this.stars.push(star);
             }
         }
@@ -189,8 +201,4 @@ var OuphenusStarField;
     }
     OuphenusStarField.Main = Main;
 })(OuphenusStarField || (OuphenusStarField = {}));
-// Creando el Campo de estrellas
-let starfield = new OuphenusStarField.Main();
-// Añadiendo Banner StartWars (solo de ejemplo)
-starfield.createBanner();
 //# sourceMappingURL=ouphenus-starfield.js.map

@@ -1,5 +1,21 @@
-namespace OuphenusStarField
+export namespace OuphenusStarField
 {
+    // -------------------------------------------------------
+    // Clase Utils
+    // -------------------------------------------------------
+    export class Utils
+    {
+        static range(min:number, max:number)
+        {
+            return min + ((max-min) * Math.random());
+        }
+
+        static rangeInt(min:number, max:number)
+        {
+            return Math.round(min + ((max-min) * Math.random()));
+        }
+    }
+
     // -------------------------------------------------------
     // Clase Ticker
     // -------------------------------------------------------
@@ -97,10 +113,12 @@ namespace OuphenusStarField
         scaleLifeTime:number;
         time:number;
         isFade:boolean;
+        static starsImages:Array<Image> = new Array<Image>();
 
-        constructor(image:Image, x:number, y:number, sx:number,sy:number,
+        constructor(x:number, y:number, sx:number,sy:number,
             speed:number, angle:number, acceleration:number)
         {
+            let image = Star.starsImages[Utils.rangeInt(0, Star.starsImages.length-1)];
             super(image, x, y, sx, sy);
             this.xo = x;
             this.yo = y;
@@ -129,6 +147,15 @@ namespace OuphenusStarField
                 0.5 * this.acceleration * this.time * this.time * Math.sign(this.vy);
             this.onDraw(context);
         }
+
+        // Setenado una lista estática de Imágenes
+        static setupStarsImages(urlsListStarsImages:Array<string>)
+        {
+            for (var i = 0; i < urlsListStarsImages.length; i++)
+            {
+                Star.starsImages.push(new Image(urlsListStarsImages[i]));
+            }
+        }
     }
 
     // -------------------------------------------------------
@@ -141,7 +168,6 @@ namespace OuphenusStarField
         context:CanvasRenderingContext2D | null;
         canvas:HTMLCanvasElement;
         ticker:Ticker;
-        images:Array<Image>;
         banner:Sprite|null = null;
         timerToCreate:number;
         stars:Array<Star>;
@@ -158,13 +184,6 @@ namespace OuphenusStarField
             this.canvas.style.position = 'absolute';
             this.stars = new Array<Star>();
             this.timerToCreate = 1000;
-
-            // Cargando Lista de imágenes
-            this.images = new Array<Image>();
-            this.images.push(new Image('images/star_white.png'));
-            this.images.push(new Image('images/star_red.png'));
-            this.images.push(new Image('images/star_blue.png'));
-            this.images.push(new Image('images/star_yellow.png'));
         }
 
         public createBanner():void
@@ -234,8 +253,7 @@ namespace OuphenusStarField
                 let speed = this.range(0.05, 0.2);
                 let angle = Math.atan2(y - centerY, x - centerX);
                 let acceleration = this.range(0.00001, 0.0003);
-                let image = this.images[Math.round(this.range(0,this.images.length-1))];
-                let star = new Star(image, x, y, scale, scale, speed, angle, acceleration);
+                let star = new Star(x, y, scale, scale, speed, angle, acceleration);
                 this.stars.push(star);
             }
         }
@@ -261,8 +279,3 @@ namespace OuphenusStarField
         }
     }
 }
-
-// Creando el Campo de estrellas
-let starfield = new OuphenusStarField.Main();
-// Añadiendo Banner StartWars (solo de ejemplo)
-starfield.createBanner();
